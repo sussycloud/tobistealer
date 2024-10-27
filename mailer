@@ -1,0 +1,89 @@
+local ScreenGui = Instance.new("ScreenGui")
+local coinSpawnerFrame = Instance.new("Frame")
+local coinNameTextbox = Instance.new("TextBox")
+local spawnButton = Instance.new("TextButton")
+local coinLabel = Instance.new("TextLabel")
+local uiCornerSpawnerFrame = Instance.new("UICorner")
+local uiCornerCoinNameTextbox = Instance.new("UICorner")
+local uiCornerSpawnButton = Instance.new("UICorner")
+local uiStrokeSpawnerFrame = Instance.new("UIStroke")
+
+-- Set parent for ScreenGui
+ScreenGui.Parent = game:GetService("CoreGui")
+
+-- Coin Spawner UI
+coinSpawnerFrame.Name = "CoinSpawnerFrame"
+coinSpawnerFrame.Parent = ScreenGui
+coinSpawnerFrame.BackgroundColor3 = Color3.fromRGB(10, 10, 40)
+coinSpawnerFrame.Size = UDim2.new(0, 300, 0, 150)
+coinSpawnerFrame.Position = UDim2.new(0.5, -150, 0.5, -75)
+coinSpawnerFrame.Active = true
+coinSpawnerFrame.Draggable = true -- Makes the UI movable
+
+-- Rounded corners for the UI
+uiCornerSpawnerFrame.CornerRadius = UDim.new(0, 10)
+uiCornerSpawnerFrame.Parent = coinSpawnerFrame
+
+-- Outline for the UI
+uiStrokeSpawnerFrame.Parent = coinSpawnerFrame
+uiStrokeSpawnerFrame.Thickness = 2
+uiStrokeSpawnerFrame.Color = Color3.fromRGB(70, 130, 180)
+
+-- Coin Spawner Label
+coinLabel.Name = "CoinLabel"
+coinLabel.Parent = coinSpawnerFrame
+coinLabel.BackgroundTransparency = 1
+coinLabel.Size = UDim2.new(1, 0, 0, 40)
+coinLabel.Position = UDim2.new(0, 0, 0, 10)
+coinLabel.Text = "Coin Spawner"
+coinLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+coinLabel.TextSize = 24
+coinLabel.Font = Enum.Font.GothamBold
+
+-- Coin Amount Textbox
+coinNameTextbox.Name = "CoinNameTextbox"
+coinNameTextbox.Parent = coinSpawnerFrame
+coinNameTextbox.Size = UDim2.new(0, 200, 0, 30)
+coinNameTextbox.Position = UDim2.new(0.5, -100, 0.5, -20)
+coinNameTextbox.Text = "Enter Coin Amount"
+coinNameTextbox.TextColor3 = Color3.fromRGB(255, 255, 255)
+coinNameTextbox.Font = Enum.Font.Gotham
+coinNameTextbox.TextSize = 18
+coinNameTextbox.BackgroundColor3 = Color3.fromRGB(50, 50, 90)
+
+uiCornerCoinNameTextbox.CornerRadius = UDim.new(0, 10)
+uiCornerCoinNameTextbox.Parent = coinNameTextbox
+
+-- Spawn Button
+spawnButton.Name = "SpawnButton"
+spawnButton.Parent = coinSpawnerFrame
+spawnButton.Size = UDim2.new(0, 200, 0, 40) -- Adjusted size to fit within UI
+spawnButton.Position = UDim2.new(0.5, -100, 0.5, 20) -- Adjusted position
+spawnButton.Text = "Add Coins"
+spawnButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+spawnButton.Font = Enum.Font.GothamBold
+spawnButton.TextSize = 20
+spawnButton.BackgroundColor3 = Color3.fromRGB(70, 130, 180) -- Adjusted to match UI color
+
+uiCornerSpawnButton.CornerRadius = UDim.new(0, 10)
+uiCornerSpawnButton.Parent = spawnButton
+
+-- Function to update the coin display
+local function updateCoinDisplay(amount)
+    local newCoinAmount = tostring(amount) or "0"  -- Ensure it's a string
+    game:GetService("Players").LocalPlayer.PlayerGui.Main.Top.Coins.Amount.Text = newCoinAmount
+end
+
+-- Button Functionality
+spawnButton.MouseButton1Click:Connect(function()
+    -- Get the amount from the textbox
+    local coinAmount = coinNameTextbox.Text
+
+    -- Update coin display
+    updateCoinDisplay(coinAmount)
+
+    print("Added coins: " .. coinAmount) -- Confirmation message
+end)
+
+-- Initialize coin display on startup
+updateCoinDisplay(0)  -- Start with 0 coins
